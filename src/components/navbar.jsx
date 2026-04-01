@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../contexts/CartContext';
 import './navbar.css';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { getTotalItems } = useCart();
+  const cartCount = getTotalItems();
+  
+  console.log('Navbar cart count:', cartCount);
 
   const handleNavClick = (path) => {
     navigate(path);
@@ -29,7 +34,12 @@ const Navbar = () => {
 
         <div className="nav-icons">
           <span className="nav-icon">🔍</span>
-          <span className="nav-icon">🛒</span>
+          <span className="nav-icon cart-icon" onClick={() => handleNavClick('/cart')}>
+            🛒
+            {getTotalItems() > 0 && (
+              <span className="cart-count">{getTotalItems()}</span>
+            )}
+          </span>
           <span className="nav-icon">👤</span>
         </div>
 
@@ -80,7 +90,12 @@ const Navbar = () => {
 
           <div className="mobile-nav-icons">
             <span className="mobile-nav-icon">🔍</span>
-            <span className="mobile-nav-icon">🛒</span>
+            <span className="mobile-nav-icon cart-icon" onClick={() => handleNavClick('/cart')}>
+              🛒
+              {getTotalItems() > 0 && (
+                <span className="cart-count">{getTotalItems()}</span>
+              )}
+            </span>
             <span className="mobile-nav-icon">👤</span>
           </div>
         </div>

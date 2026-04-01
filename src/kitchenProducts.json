@@ -4,21 +4,21 @@
       "id": 1,
       "name": "Dish Drainer",
       "price": "21,000",
-      "image": "/image/dish drainer.jpeg",
+      "image": "/image/dish%20drainer.jpeg",
       "rating": 4.5
     },
     {
       "id": 2,
       "name": "Plate Rack",
       "price": "13,000",
-      "image": "/image/plate rack.jpeg",
+      "image": "/image/plate%20rack.jpeg",
       "rating": 4.7
     },
     {
       "id": 3,
       "name": "Dish Rack",
       "price": "12,000",
-      "image": "/image/dish rack.jpeg",
+      "image": "/image/dish%20rack.jpeg",
       "rating": 4.6
     },
     {

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import appliancesProducts from '../appliancesProducts.json';
+import { useCart } from '../contexts/CartContext';
+import { useToast } from '../contexts/ToastContext';
 import './Appliances.css';
 
 function Appliances() {
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const { addToCart } = useCart();
+  const { addToast } = useToast();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -28,6 +32,12 @@ function Appliances() {
 
   const renderStars = (rating) => {
     return '⭐'.repeat(Math.floor(rating)) + (rating % 1 !== 0 ? '✨' : '');
+  };
+
+  const handleAddToCart = (product, e) => {
+    e.stopPropagation(); // Prevent modal from opening
+    addToCart(product);
+    addToast(`✅ ${product.name} added to cart!`, 'success');
   };
 
   return (
@@ -64,7 +74,9 @@ function Appliances() {
                 <img src={product.image} alt={product.name} />
                 <div className="product-badge">BUY</div>
                 <div className="product-overlay">
-                  <button className="add-to-cart-btn">Add to Cart</button>
+                  <button className="add-to-cart-btn" onClick={(e) => handleAddToCart(product, e)}>
+                    Add to Cart
+                  </button>
                 </div>
               </div>
               
@@ -111,7 +123,9 @@ function Appliances() {
               <h2>{selectedProduct.name}</h2>
               <p className="modal-price">{selectedProduct.price}</p>
               <p className="modal-rating">{renderStars(selectedProduct.rating)} {selectedProduct.rating}/5</p>
-              <button className="modal-add-btn">Add to Cart</button>
+              <button className="modal-add-btn" onClick={(e) => handleAddToCart(selectedProduct, e)}>
+                Add to Cart
+              </button>
               <button 
                 className="modal-whatsapp-btn" 
                 onClick={() => window.open(`https://wa.me/1234567890?text=Hi! I'm interested in ${selectedProduct.name}. Price: ${selectedProduct.price}`, '_blank')}
