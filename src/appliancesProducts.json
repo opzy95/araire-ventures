@@ -1,0 +1,61 @@
+{
+  "appliancesProducts": [
+    {
+      "id": 1,
+      "name": "Electric Cooker",
+      "price": "10,500",
+      "image": "/image/elctriccooker.jpeg",
+      "rating": 4.6
+    },
+    {
+      "id": 2,
+      "name": "Electric Cooker Pro",
+      "price": "8500",
+      "image": "/image/elctriccooker2.jpeg",
+      "rating": 4.8
+    },
+    {
+      "id": 3,
+      "name": "Electric Cooker Deluxe",
+      "price": "14,600",
+      "image": "/image/electric cooker.jpeg",
+      "rating": 4.7
+    },
+    {
+      "id": 4,
+      "name": "Electric Cooker Mini",
+      "price": "17,500",
+      "image": "/image/electric2.jpeg",
+      "rating": 4.4
+    },
+    {
+      "id": 5,
+      "name": "Standing Fan",
+      "price": "$59.99",
+      "image": "/image/standingfan.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 6,
+      "name": "Small Fan",
+      "price": "11,500",
+      "image": "/image/smallfan.jpeg",
+      "rating": 4.3
+    },
+    {
+      "id": 7,
+      "name": "Small Fan Plus",
+      "price": "6000",
+      "image": "/image/smallfan2.jpeg",
+      "rating": 4.4
+    },
+    {
+      "id": 8,
+      "name": "Solar Panel",
+      "price": "5200",
+      "image": "/image/solar panel.jpeg",
+      "rating": 4.9
+    }
+    
+  ]
+}

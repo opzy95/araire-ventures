@@ -1,0 +1,40 @@
+{
+  "kidsProducts": [
+    {
+      "id": 1,
+      "name": "Child Chair",
+      "price": "3500",
+      "image": "/image/childchair.jpeg",
+      "rating": 4.7
+    },
+    
+    {
+      "id": 2,
+      "name": "Kids Basket",
+      "price": "2900",
+      "image": "/image/bbasket.jpeg",
+      "rating": 4.3
+    },
+    {
+      "id": 3,
+      "name": "Kids Storage Box",
+      "price": "7000",
+      "image": "/image/bigbasket.jpeg",
+      "rating": 4.6
+    },
+    {
+      "id": 4,
+      "name": "Kids Spoon Set",
+      "price": "7100",
+      "image": "/image/spoon1.jpeg",
+      "rating": 4.4
+    },
+    {
+      "id": 5,
+      "name": "Kids Plate Rack",
+      "price": "4100",
+      "image": "/image/platerack.jpeg",
+      "rating": 4.5
+    }
+  ]
+}

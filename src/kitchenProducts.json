@@ -1,0 +1,119 @@
+{
+  "kitchenProducts": [
+    {
+      "id": 1,
+      "name": "Dish Drainer",
+      "price": "21,000",
+      "image": "/image/dish drainer.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 2,
+      "name": "Plate Rack",
+      "price": "13,000",
+      "image": "/image/plate rack.jpeg",
+      "rating": 4.7
+    },
+    {
+      "id": 3,
+      "name": "Dish Rack",
+      "price": "12,000",
+      "image": "/image/dish rack.jpeg",
+      "rating": 4.6
+    },
+    {
+      "id": 4,
+      "name": "Hand Grater",
+      "price": "6500",
+      "image": "/image/handgrater2.jpeg",
+      "rating": 4.4
+    },
+    {
+      "id": 5,
+      "name": "Royal Pot",
+      "price": "18,500",
+      "image": "/image/royalpot.jpeg",
+      "rating": 4.8
+    },
+    {
+      "id": 6,
+      "name": "Premium Pot",
+      "price": "24,900",
+      "image": "/image/ppot.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 7,
+      "name": "Kitchen Spoon Set",
+      "price": "7100",
+      "image": "/image/spoon1.jpeg",
+      "rating": 4.3
+    },
+    {
+      "id": 8,
+      "name": "Storage Basket",
+      "price": "2900",
+      "image": "/image/bbasket.jpeg",
+      "rating": 4.6
+    },
+    {
+      "id": 9,
+      "name": "Hand Grater",
+      "price": "6500",
+      "image": "/image/handgrater2.jpeg",
+      "rating": 4.2
+    },
+    {
+      "id": 10,
+      "name": "Kids Wardrobe",
+      "price": "25,500",
+      "image": "/image/superwardrope.jpeg",
+      "rating": 4.8
+    },
+    {
+      "id": 11,
+      "name": "pot",
+      "price": "139,000",
+      "image": "/image/pppot.jpeg",
+      "rating": 4.2
+    },
+    {
+      "id": 12,
+      "name": "spoon",
+      "price": "4700",
+      "image": "/image/spoonn.jpeg",
+      "rating": 4.2
+    },
+    {
+      "id": 13,
+      "name": "spoon",
+      "price": "4500",
+      "image": "/image/spoon3.jpeg",
+      "rating": 4.2
+    },{
+      "id": 14,
+      "name": "Yam Pounder",
+      "price": "61,500",
+      "image": "/image/yamponder.jpeg",
+      "rating": 4.5
+    },{
+      "id": 15,
+      "name": "Grater",
+      "price": "2600",
+      "image": "/image/grater.jpeg",
+      "rating": 4.5
+    },{
+      "id": 16,
+      "name": "Plate Rack",
+      "price": "10,600",
+      "image": "/image/palterack2.jpeg",
+      "rating": 4.5
+    },{
+      "id": 17,
+      "name": "Pot",
+      "price": "118,000",
+      "image": "/image/ppoot.jpeg",
+      "rating": 4.5
+    }
+  ]
+}
