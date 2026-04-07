@@ -140,7 +140,15 @@
       "price": "2000",
       "image": "/image/phone-holder.jpeg",
       "rating": 4.5
+    },
+    {
+      "id": 21,
+      "name": "Dotted Towel",
+      "price": "5500",
+      "image": "/image/Dotted-towel.jpeg",
+      "rating": 4.5
     }
+
   ]
   
 
