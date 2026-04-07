@@ -35,6 +35,86 @@
       "price": "4100",
       "image": "/image/platerack.jpeg",
       "rating": 4.5
+    },
+    {
+      "id": 6,
+      "name": "Kid Chair",
+      "price": "6150",
+      "image": "/image/tick-kid-chair.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 6,
+      "name": "Kid Chair",
+      "price": "3500",
+      "image": "/image/kid-chair.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 6,
+      "name": "Umbrella",
+      "price": "4500",
+      "image": "/image/umbrella.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 6,
+      "name": "Travelling Bag",
+      "price": "7500",
+      "image": "/image/Travelling-bag.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 6,
+      "name": "Luxury Bottle",
+      "price": "2400",
+      "image": "/image/bottle.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 7,
+      "name": "Luxury Bottle",
+      "price": "2400",
+      "image": "/image/650ml-bottle.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 8,
+      "name": "Luxury Bottle",
+      "price": "1600",
+      "image": "/image/800ml-bottle.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 8,
+      "name": "Banana Umbrella",
+      "price": "4800",
+      "image": "/image/banana-umbrella.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 9,
+      "name": "Capsule Umbrella",
+      "price": "4800",
+      "image": "/image/capsule-umbrella.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 10,
+      "name": "Cement Aroma Diffuser",
+      "price": "15,500",
+      "image": "/image/cement-aroma-diffuser.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 10,
+      "name": "Kids Ipad",
+      "price": "15,500",
+      "image": "/image/ipad-ultra-tablet.jpeg",
+      "rating": 4.5
     }
   ]
+  
+
+  
 }

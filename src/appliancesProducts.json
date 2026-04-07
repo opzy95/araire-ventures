@@ -55,6 +55,27 @@
       "price": "5200",
       "image": "/image/solar%20panel.jpeg",
       "rating": 4.9
+    },
+    {
+      "id": 9,
+      "name": "Deluxe Iron",
+      "price": "12,000",
+      "image": "/image/Deluxe-iron.jpeg",
+      "rating": 4.9
+    },
+    {
+      "id": 10,
+      "name": "Camping Light",
+      "price": "9000",
+      "image": "/image/camping-light.jpeg",
+      "rating": 4.9
+    },
+    {
+      "id": 10,
+      "name": "Impusle Sealer",
+      "price": "17,000",
+      "image": "/image/impulse-sealer.jpeg",
+      "rating": 4.9
     }
     
   ]

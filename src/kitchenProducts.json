@@ -114,6 +114,102 @@
       "price": "118,000",
       "image": "/image/ppoot.jpeg",
       "rating": 4.5
+    },{
+      "id": 18,
+      "name": "potato-peeler",
+      "price": "500",
+      "image": "/image/potato-peeler.jpeg",
+      "rating": 4.5
+    },{
+      "id": 19,
+      "name": "luxury-warmer",
+      "price": "175,000",
+      "image": "/image/luxury-warmer.jpeg",
+      "rating": 4.5
+    },{
+      "id": 20,
+      "name": "Oil Bottle",
+      "price": "4300",
+      "image": "/image/Oil Bottle.jpeg",
+      "rating": 4.5
+    },{
+      "id": 21,
+      "name": "Oil Bottle",
+      "price": "15,700",
+      "image": "/image/Masa-pan.jpeg",
+      "rating": 4.5
+    },{
+      "id": 22,
+      "name": "Luxury Dish Drainer",
+      "price": "26,500",
+      "image": "/image/luxury-dish-drainer.jpeg",
+      "rating": 4.5
+    },{
+      "id": 23,
+      "name": "Luxury Bucket",
+      "price": "5100",
+      "image": "/image/luxury-bucket-with-cover.jpeg",
+      "rating": 4.5
+    },{
+      "id": 24,
+      "name": "Kitchen-mat",
+      "price": "11,000",
+      "image": "/image/Kitchen-mat.jpeg",
+      "rating": 4.5
+    },{
+      "id": 25,
+      "name": "Food mixer",
+      "price": "21,000",
+      "image": "/image/food-mixer.jpeg",
+      "rating": 4.5
+    },{
+      "id": 26,
+      "name": "Cup",
+      "price": "900",
+      "image": "/image/cup.jpeg",
+      "rating": 4.5
+    },{
+      "id": 27,
+      "name": "Cordless Kettle",
+      "price": "8500",
+      "image": "/image/Cordless-kettle.jpeg",
+      "rating": 4.5
+    },{
+      "id": 28,
+      "name": "Yam Pounder",
+      "price": "66,000",
+      "image": "/image/20l-yam-pounder.jpeg",
+      "rating": 4.5
+    },{
+      "id": 29,
+      "name": "Yam Pounder",
+      "price": "24,500",
+      "image": "/image/6L-yam-pounder.jpeg",
+      "rating": 4.5
+    },{
+      "id": 30,
+      "name": "4 Phase Table Gas",
+      "price": "36,000",
+      "image": "/image/4-phase-table-gas.jpeg",
+      "rating": 4.5
+    },{
+      "id": 31,
+      "name": "4 Phase Table Gas",
+      "price": "81,000",
+      "image": "/image/4-in-1cooler.jpeg",
+      "rating": 4.5
+    },{
+      "id": 32,
+      "name": "Flat Floor Mop",
+      "price": "81,000",
+      "image": "/image/Flat-floor-mop.jpeg",
+      "rating": 4.5
+    },{
+      "id": 32,
+      "name": "Lemon Squeezer",
+      "price": "2000",
+      "image": "/image/Lemon-squeezer.jpeg",
+      "rating": 4.5
     }
   ]
 }
