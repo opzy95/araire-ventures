@@ -118,7 +118,7 @@
       "id": 18,
       "name": "potato-peeler",
       "price": "500",
-      "image": "/image/potato-peeler.jpeg",
+      "image": "/image/Potato-peeler.jpeg",
       "rating": 4.5
     },{
       "id": 19,
@@ -134,7 +134,7 @@
       "rating": 4.5
     },{
       "id": 21,
-      "name": "Oil Bottle",
+      "name": "Masa Pan",
       "price": "15,700",
       "image": "/image/Masa-pan.jpeg",
       "rating": 4.5
@@ -148,7 +148,7 @@
       "id": 23,
       "name": "Luxury Bucket",
       "price": "5100",
-      "image": "/image/luxury-bucket-with-cover.jpeg",
+      "image": "/image/Luxury-bucket-with-cover.jpeg",
       "rating": 4.5
     },{
       "id": 24,
@@ -188,18 +188,12 @@
       "rating": 4.5
     },{
       "id": 30,
-      "name": "4 Phase Table Gas",
-      "price": "36,000",
-      "image": "/image/4-phase-table-gas.jpeg",
-      "rating": 4.5
-    },{
-      "id": 31,
-      "name": "4 Phase Table Gas",
+      "name": "4 in 1 Cooler",
       "price": "81,000",
       "image": "/image/4-in-1cooler.jpeg",
       "rating": 4.5
     },{
-      "id": 32,
+      "id": 31,
       "name": "Flat Floor Mop",
       "price": "81,000",
       "image": "/image/Flat-floor-mop.jpeg",
@@ -209,6 +203,24 @@
       "name": "Lemon Squeezer",
       "price": "2000",
       "image": "/image/Lemon-squeezer.jpeg",
+      "rating": 4.5
+    },{
+      "id": 33,
+      "name": "4 Phase Table Gas",
+      "price": "36000",
+      "image": "/image/4-Phase-table-gas.jpeg",
+      "rating": 4.5
+    },{
+      "id": 34,
+      "name": "Chopping Board",
+      "price": "3500",
+      "image": "/image/chopping-board.jpeg",
+      "rating": 4.5
+    },{
+      "id": 34,
+      "name": "Big Dust Pan",
+      "price": "700",
+      "image": "/image/Big-dust-pan.jpeg",
       "rating": 4.5
     }
   ]

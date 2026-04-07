@@ -44,73 +44,101 @@
       "rating": 4.5
     },
     {
-      "id": 6,
+      "id": 7,
       "name": "Kid Chair",
       "price": "3500",
       "image": "/image/kid-chair.jpeg",
       "rating": 4.5
     },
     {
-      "id": 6,
+      "id": 8,
       "name": "Umbrella",
       "price": "4500",
       "image": "/image/umbrella.jpeg",
       "rating": 4.5
     },
     {
-      "id": 6,
+      "id": 9,
       "name": "Travelling Bag",
       "price": "7500",
-      "image": "/image/Travelling-bag.jpeg",
+      "image": "/image/Traveling-bag.jpeg",
       "rating": 4.5
     },
     {
-      "id": 6,
+      "id": 10,
       "name": "Luxury Bottle",
       "price": "2400",
       "image": "/image/bottle.jpeg",
       "rating": 4.5
     },
     {
-      "id": 7,
+      "id": 11,
       "name": "Luxury Bottle",
       "price": "2400",
       "image": "/image/650ml-bottle.jpeg",
       "rating": 4.5
     },
     {
-      "id": 8,
+      "id": 12,
       "name": "Luxury Bottle",
       "price": "1600",
       "image": "/image/800ml-bottle.jpeg",
       "rating": 4.5
     },
     {
-      "id": 8,
+      "id": 13,
       "name": "Banana Umbrella",
       "price": "4800",
       "image": "/image/banana-umbrella.jpeg",
       "rating": 4.5
     },
     {
-      "id": 9,
+      "id": 14,
       "name": "Capsule Umbrella",
       "price": "4800",
       "image": "/image/capsule-umbrella.jpeg",
       "rating": 4.5
     },
     {
-      "id": 10,
+      "id": 15,
       "name": "Cement Aroma Diffuser",
       "price": "15,500",
       "image": "/image/cement-aroma-diffuser.jpeg",
       "rating": 4.5
     },
     {
-      "id": 10,
+      "id": 16,
       "name": "Kids Ipad",
       "price": "15,500",
       "image": "/image/ipad-ultra-tablet.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 17,
+      "name": "Power Bank",
+      "price": "17,000",
+      "image": "/image/powerbank-20kmah.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 18,
+      "name": "Power Bank",
+      "price": "19,000",
+      "image": "/image/power-bank-20kmha.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 19,
+      "name": "Rabbit Phone Holder",
+      "price": "2200",
+      "image": "/image/rabbit-phone-holder.jpeg",
+      "rating": 4.5
+    },
+    {
+      "id": 20,
+      "name": "Phone Holder",
+      "price": "2000",
+      "image": "/image/phone-holder.jpeg",
       "rating": 4.5
     }
   ]
