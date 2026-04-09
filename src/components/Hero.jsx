@@ -106,7 +106,7 @@ function Hero() {
           <button>ORDER VIA WHATSAPP</button>
         </motion.div>
 
-      </div>
+      </div> 
     </motion.div>
   );
 }
