@@ -319,22 +319,41 @@
 @media (max-width: 768px) {
   .navbar {
     padding: 15px 20px;
+    display: flex;
+    flex-direction: row;        /* ✅ force single row */
+    justify-content: space-between;
+    align-items: center;
   }
 
   .desktop-nav {
-    display: none;
+    display: none;              /* ✅ hide desktop links */
+  }
+
+  .brand-name {
+    font-size: 20px;
+    flex: 1;                    /* ✅ takes leftover space */
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;                  /* ✅ space between icons and hamburger */
+  }
+
+  .nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-icon {
+    font-size: 20px;
   }
 
   .hamburger {
     display: flex;
-  }
-
-  .nav-icons {
-    display: none;
-  }
-
-  .brand-name {
-    font-size: 24px;
+    flex-direction: column;
+    gap: 4px;
   }
 }
 
