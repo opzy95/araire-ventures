@@ -33,7 +33,7 @@ const Navbar = () => {
         </div>
 
         <div className="nav-icons">
-          <span className="nav-icon">🔍</span>
+          {/* <span className="nav-icon">🔍</span> */}
           <span className="nav-icon cart-icon" onClick={() => handleNavClick('/cart')}>
             🛒
             {getTotalItems() > 0 && (

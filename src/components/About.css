@@ -23,12 +23,15 @@
 }
 
 .about-content {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-wrap: wrap;       /* wraps to next line on smaller screens */
   gap: 30px;
+  justify-content: center;
+  align-items: stretch;  /* equal height cards */
 }
 
 .about-section {
+  flex: 1 1 300px;       /* grows, shrinks, min width 300px */
   background-color: white;
   padding: 20px;
   border-radius: 8px;
