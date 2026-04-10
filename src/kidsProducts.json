@@ -147,6 +147,24 @@
       "price": "5500",
       "image": "/image/Dotted-towel.jpeg",
       "rating": 4.5
+    },{
+      "id": 22,
+      "name": "Drum",
+      "price": "8500",
+      "image": "/image/drum.jpeg",
+      "rating": 4.5
+    },{
+      "id": 23,
+      "name": "Big Container",
+      "price": "8500",
+      "image": "/image/bg.jpeg",
+      "rating": 4.5
+    },{
+      "id": 24,
+      "name": "Spice Rack",
+      "price": "3500",
+      "image": "/image/spice.jpeg",
+      "rating": 4.5
     }
 
   ]
