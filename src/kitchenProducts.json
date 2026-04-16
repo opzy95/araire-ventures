@@ -217,24 +217,68 @@
       "image": "/image/chopping-board.jpeg",
       "rating": 4.5
     },{
-      "id": 34,
+      "id": 35,
       "name": "Big Dust Pan",
       "price": "700",
       "image": "/image/Big-dust-pan.jpeg",
       "rating": 4.5
     }
     ,{
-      "id": 35,
+      "id": 36,
       "name": "Summer Cooler",
       "price": "19,500",
       "image": "/image/25l-summer-cooler.jpeg",
       "rating": 4.5
     },{
-      "id": 36,
-      "name": "Drum",
-      "price": "8500",
-      "image": "/image/.jpeg",
+      "id": 37,
+      "name": "Zandy Pot",
+      "price": "137,500",
+      "image": "/image/Zandy-Pot.jpeg",
+      "rating": 4.5
+    },{
+      "id": 38,
+      "name": "Vintage Granite pot",
+      "price": "108,000",
+      "image": "/image/Vintage-granite-Pot.jpeg",
+      "rating": 4.5
+    },{
+      "id": 39,
+      "name": "Royal-luxury-pot",
+      "price": "102,000",
+      "image": "/image/Royal-luxury-pot.jpeg",
+      "rating": 4.5
+    },{
+      "id": 40,
+      "name": "Luxury pot",
+      "price": "155,000",
+      "image": "/image/Luxury-pot.jpeg",
+      "rating": 4.5
+    },{
+      "id": 41,
+      "name": "Luxury Plate",
+      "price": "8,500",
+      "image": "/image/Luxury-plate.jpeg",
+      "rating": 4.5
+    },{
+      "id": 42,
+      "name": "Leaf Plate",
+      "price": "7,500",
+      "image": "/image/Leaf-plate.jpeg",
+      "rating": 4.5
+    },{
+      "id": 43,
+      "name": "Jokky pot",
+      "price": "108,000",
+      "image": "/image/Jokky-Pot.jpeg",
+      "rating": 4.5
+    },{
+      "id": 44,
+      "name": "Danddy Pot",
+      "price": "117,000",
+      "image": "/image/Danddy-Pot.jpeg",
       "rating": 4.5
     }
   ]
+
+  
 }
