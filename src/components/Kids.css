@@ -77,45 +77,8 @@
   box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
 }
 
-.product-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.product-card:hover .product-overlay {
-  opacity: 1;
-}
-
-.add-to-cart-btn {
-  background-color: #ff9800;
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  font-size: 1rem;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
-}
-
-.add-to-cart-btn:hover {
-  background-color: #e68900;
-  transform: scale(1.08);
-  box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
-}
-
-.whatsapp-btn {
-  background: linear-gradient(135deg, #25d366, #128c7e);
+.add-to-cart-btn-product {
+  background: linear-gradient(135deg, #ff9800, #e68900);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -130,13 +93,13 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3);
+  box-shadow: 0 3px 10px rgba(255, 152, 0, 0.3);
 }
 
-.whatsapp-btn:hover {
-  background: linear-gradient(135deg, #128c7e, #075e54);
+.add-to-cart-btn-product:hover {
+  background: linear-gradient(135deg, #e68900, #d47700);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+  box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
 }
 
 .product-info {
@@ -242,24 +205,6 @@
   margin-bottom: 20px;
 }
 
-.modal-add-btn {
-  background: linear-gradient(135deg, #ff9800, #e68900);
-  color: white;
-  border: none;
-  padding: 14px 40px;
-  font-size: 1.1rem;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  width: 100%;
-}
-
-.modal-add-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
-}
-
 .modal-whatsapp-btn {
   background: linear-gradient(135deg, #25d366, #128c7e);
   color: white;
@@ -271,7 +216,6 @@
   font-weight: 600;
   transition: all 0.3s ease;
   width: 100%;
-  margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -2,37 +2,37 @@
   "kitchenProducts": [
     {
       "id": 1,
-      "name": "Dish Drainer",
-      "price": "21,000",
-      "image": "/image/dish%20drainer.jpeg",
+      "name": "Boscon Electric Kettle",
+      "price": "9500",
+      "image": "/iimage/Boscon_kettle.jpeg",
       "rating": 4.5
     },
     {
       "id": 2,
-      "name": "Plate Rack",
-      "price": "13,000",
-      "image": "/image/plate%20rack.jpeg",
+      "name": "8L Manual Air Fryer",
+      "price": "58,000",
+      "image": "/iimage/Airfryer.jpeg",
       "rating": 4.7
     },
     {
       "id": 3,
-      "name": "Dish Rack",
-      "price": "12,000",
-      "image": "/image/dish%20rack.jpeg",
+      "name": "Baby Bathing Bowl",
+      "price": "9500",
+      "image": "/iimage/bowl.jpeg",
       "rating": 4.6
     },
     {
       "id": 4,
-      "name": "Hand Grater",
-      "price": "6500",
-      "image": "/image/handgrater2.jpeg",
+      "name": "Cosynet Air Fryer",
+      "price": "38,000",
+      "image": "/iimage/Cosynest_Fryer.jpeg",
       "rating": 4.4
     },
     {
       "id": 5,
-      "name": "Royal Pot",
-      "price": "18,500",
-      "image": "/image/royalpot.jpeg",
+      "name": "Dry Mill Grinder",
+      "price": "12,000",
+      "image": "/iimage/Dry_mill.jpeg",
       "rating": 4.8
     },
     {
@@ -45,22 +45,22 @@
     {
       "id": 7,
       "name": "Kitchen Spoon Set",
-      "price": "7100",
-      "image": "/image/spoon1.jpeg",
+      "price": "23,000",
+      "image": "/iimage/Non_stick_spoon.jpeg",
       "rating": 4.3
     },
     {
       "id": 8,
-      "name": "Storage Basket",
-      "price": "2900",
-      "image": "/image/bbasket.jpeg",
+      "name": "2.5L Trifone Blender",
+      "price": "26,000",
+      "image": "/iimage/Trifone_blender.jpeg",
       "rating": 4.6
     },
     {
       "id": 9,
-      "name": "Hand Grater",
-      "price": "6500",
-      "image": "/image/handgrater2.jpeg",
+      "name": "3 in 1 Bucket",
+      "price": "5500",
+      "image": "/iimage/bucket_3.jpeg",
       "rating": 4.2
     },
     {
@@ -72,23 +72,23 @@
     },
     {
       "id": 11,
-      "name": "pot",
-      "price": "139,000",
-      "image": "/image/pppot.jpeg",
+      "name": "3 Jar Excella Blender",
+      "price": "61,000",
+      "image": "/iimage/Excella_blender.jpeg",
       "rating": 4.2
     },
     {
       "id": 12,
-      "name": "spoon",
-      "price": "4700",
-      "image": "/image/spoonn.jpeg",
+      "name": "3L whistling Kettle",
+      "price": "12,000",
+      "image": "/iimage/whistling_kettle.jpeg",
       "rating": 4.2
     },
     {
       "id": 13,
-      "name": "spoon",
-      "price": "4500",
-      "image": "/image/spoon3.jpeg",
+      "name": "Single Wooden spoon",
+      "price": "1800",
+      "image": "/iimage/Plate.jpeg",
       "rating": 4.2
     },{
       "id": 14,
@@ -98,15 +98,15 @@
       "rating": 4.5
     },{
       "id": 15,
-      "name": "Grater",
-      "price": "2600",
-      "image": "/image/grater.jpeg",
+      "name": "3 in 1 Wall Clock",
+      "price": "9000",
+      "image": "/iimage/wall_clock.jpeg",
       "rating": 4.5
     },{
       "id": 16,
-      "name": "Plate Rack",
-      "price": "10,600",
-      "image": "/image/palterack2.jpeg",
+      "name": "Duck Toilet Brush",
+      "price": "4500",
+      "image": "/iimage/Duck_wash.jpeg",
       "rating": 4.5
     },{
       "id": 17,
@@ -218,9 +218,9 @@
       "rating": 4.5
     },{
       "id": 35,
-      "name": "Big Dust Pan",
-      "price": "700",
-      "image": "/image/Big-dust-pan.jpeg",
+      "name": "3 Layer Foldable Kitchen Rack",
+      "price": "55,000",
+      "image": "/iimage/Foldable_kitchen_rack.jpeg",
       "rating": 4.5
     }
     ,{
@@ -252,30 +252,6 @@
       "name": "Luxury pot",
       "price": "155,000",
       "image": "/image/Luxury-pot.jpeg",
-      "rating": 4.5
-    },{
-      "id": 41,
-      "name": "Luxury Plate",
-      "price": "8,500",
-      "image": "/image/Luxury-plate.jpeg",
-      "rating": 4.5
-    },{
-      "id": 42,
-      "name": "Leaf Plate",
-      "price": "7,500",
-      "image": "/image/Leaf-plate.jpeg",
-      "rating": 4.5
-    },{
-      "id": 43,
-      "name": "Jokky pot",
-      "price": "108,000",
-      "image": "/image/Jokky-pot.jpeg",
-      "rating": 4.5
-    },{
-      "id": 44,
-      "name": "Danddy Pot",
-      "price": "117,000",
-      "image": "/image/Danddy-Pot.jpeg",
       "rating": 4.5
     }
   ]

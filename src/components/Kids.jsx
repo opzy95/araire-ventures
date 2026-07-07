@@ -10,6 +10,12 @@ function Kids() {
   const { addToCart } = useCart();
   const { addToast } = useToast();
 
+  const handleAddToCart = (product, e) => {
+    e.stopPropagation();
+    addToCart(product);
+    addToast(`✅ ${product.name} added to cart!`, 'success');
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -34,11 +40,7 @@ function Kids() {
     return '⭐'.repeat(Math.floor(rating)) + (rating % 1 !== 0 ? '✨' : '');
   };
 
-  const handleAddToCart = (product, e) => {
-    e.stopPropagation(); // Prevent modal from opening
-    addToCart(product);
-    addToast(`✅ ${product.name} added to cart!`, 'success');
-  };
+
 
   return (
     <section className="kids">
@@ -73,11 +75,6 @@ function Kids() {
               <div className="product-image-wrapper">
                 <img src={product.image} alt={product.name} />
                 <div className="product-badge">BUY</div>
-                <div className="product-overlay">
-                  <button className="add-to-cart-btn" onClick={(e) => handleAddToCart(product, e)}>
-                    Add to Cart
-                  </button>
-                </div>
               </div>
               
               <div className="product-info">
@@ -88,13 +85,10 @@ function Kids() {
                 </div>
                 <p className="product-price">#{product.price}</p>
                 <button 
-                  className="whatsapp-btn" 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(`https://wa.me/1234567890?text=Hi! I'm interested in ${product.name}. Price: ${product.price}`, '_blank');
-                  }}
+                  className="add-to-cart-btn-product" 
+                  onClick={(e) => handleAddToCart(product, e)}
                 >
-                  📱 Order via WhatsApp
+                  🛒 Add to Cart
                 </button>
               </div>
             </motion.div>
@@ -123,14 +117,11 @@ function Kids() {
               <h2>{selectedProduct.name}</h2>
               <p className="modal-price">{selectedProduct.price}</p>
               <p className="modal-rating">{renderStars(selectedProduct.rating)} {selectedProduct.rating}/5</p>
-              <button className="modal-add-btn" onClick={(e) => handleAddToCart(selectedProduct, e)}>
-                Add to Cart
-              </button>
               <button 
-                className="modal-whatsapp-btn" 
-                onClick={() => window.open(`https://wa.me/1234567890?text=Hi! I'm interested in ${selectedProduct.name}. Price: ${selectedProduct.price}`, '_blank')}
+                className="modal-add-btn" 
+                onClick={(e) => handleAddToCart(selectedProduct, e)}
               >
-                📱 Order via WhatsApp
+                🛒 Add to Cart
               </button>
             </div>
           </motion.div>
