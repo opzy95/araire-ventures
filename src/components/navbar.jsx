@@ -41,7 +41,10 @@ const Navbar = () => {
                 <span className="cart-count">{getTotalItems()}</span>
               )}
             </span>
-            <span className="nav-icon">👤</span>
+          </div>
+          <div className="nav-auth-actions">
+            <Link to="/admin/login" className="nav-auth-login">Sign in</Link>
+            <Link to="/register" className="nav-auth-register">Register</Link>
           </div>
 
           {/* Hamburger — only visible on mobile */}
@@ -65,6 +68,11 @@ const Navbar = () => {
             <button className="mobile-home-btn" onClick={() => handleNavClick('/')}>
               🏠 Home
             </button>
+          </div>
+
+          <div className="mobile-auth-links">
+            <button className="nav-auth-login" onClick={() => handleNavClick('/admin/login')}>Sign in</button>
+            <button className="nav-auth-register" onClick={() => handleNavClick('/register')}>Register</button>
           </div>
 
           <div className="mobile-categories-section">

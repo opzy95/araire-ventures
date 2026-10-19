@@ -3,3 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.catalog-empty-state {
+  grid-column: 1 / -1;
+  padding: 34px 16px;
+  color: #73817a;
+  font-size: 14px;
+  text-align: center;
+}

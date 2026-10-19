@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import appliancesProducts from '../appliancesProducts.json';
 import { useCart } from '../contexts/CartContext';
+import { useProducts } from '../contexts/ProductContext';
 import { useToast } from '../contexts/ToastContext';
 import './Appliances.css';
 
 function Appliances() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { addToCart } = useCart();
+  const { getProductsByCategory } = useProducts();
   const { addToast } = useToast();
+  const appliancesProducts = getProductsByCategory('Appliances');
 
   const handleAddToCart = (product, e) => {
     e.stopPropagation();
@@ -64,7 +66,7 @@ function Appliances() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {appliancesProducts.appliancesProducts.map((product) => (
+          {appliancesProducts.map((product) => (
             <motion.div
               key={product.id}
               className="product-card"
@@ -93,6 +95,7 @@ function Appliances() {
               </div>
             </motion.div>
           ))}
+          {appliancesProducts.length === 0 && <p className="catalog-empty-state">No appliance products are available yet.</p>}
         </motion.div>
       </div>
 

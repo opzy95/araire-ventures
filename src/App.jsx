@@ -11,33 +11,44 @@ import Footer from './components/Footer';
 import Cart from './components/Cart';
 import { CartProvider } from './contexts/CartContext';
 import { ToastProvider } from './contexts/ToastContext';
+import { ProductProvider } from './contexts/ProductContext';
+import { AuthProvider } from './contexts/AuthContext';
+import AdminDashboard from './components/pages/AdminDashboard';
+import AdminAuth, { ProtectedAdminRoute } from './components/pages/AdminAuth';
 
 function App() {
   return (
     <ToastProvider>
       <CartProvider>
-        <Router>
-          <div className="App">
-            <Navbar />
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <>
-                    <Hero />
-                    <Categories />
-                    <About />
-                  </>
-                }
-              />
-              <Route path="/kitchen" element={<Kitchen />} />
-              <Route path="/appliances" element={<Appliances />} />
-              <Route path="/others" element={<Kids />} />
-              <Route path="/cart" element={<Cart />} />
-            </Routes>
-            <Footer />
-          </div>
-        </Router>
+        <AuthProvider>
+          <ProductProvider>
+            <Router>
+              <div className="App">
+                <Navbar />
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <>
+                        <Hero />
+                        <Categories />
+                        <About />
+                      </>
+                    }
+                  />
+                  <Route path="/kitchen" element={<Kitchen />} />
+                  <Route path="/appliances" element={<Appliances />} />
+                  <Route path="/others" element={<Kids />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/admin/login" element={<AdminAuth mode="login" />} />
+                  <Route path="/register" element={<AdminAuth mode="register" />} />
+                  <Route path="/admin" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
+                </Routes>
+                <Footer />
+              </div>
+            </Router>
+          </ProductProvider>
+        </AuthProvider>
       </CartProvider>
     </ToastProvider>
   );
