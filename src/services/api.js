@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://araire-backend.onrender.com/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://araire-backend.onrender.com';
 
 export async function apiRequest(path, { method = 'GET', body, token } = {}) {
   const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
@@ -29,8 +29,8 @@ export async function apiRequest(path, { method = 'GET', body, token } = {}) {
 }
 
 export const authEndpoints = {
-  login: import.meta.env.VITE_AUTH_LOGIN_PATH || '/auth/login',
-  register: import.meta.env.VITE_AUTH_REGISTER_PATH || '/auth/register',
-  users: import.meta.env.VITE_USERS_PATH || '/users',
-  products: import.meta.env.VITE_PRODUCTS_PATH || '/products',
+  login: import.meta.env.VITE_AUTH_LOGIN_PATH || '/api/auth/login',
+  register: import.meta.env.VITE_AUTH_REGISTER_PATH || '/api/auth/register',
+  users: import.meta.env.VITE_USERS_PATH || '/api/users',
+  products: import.meta.env.VITE_PRODUCTS_PATH || '/api/products',
 };
