@@ -1,8 +1,19 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://araire-backend.onrender.com';
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'https://araire-backend.onrender.com').replace(/\/$/, '');
+
+function buildApiUrl(path) {
+  const rawPath = path || '/';
+  const normalizedPath = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
+
+  if (normalizedPath.startsWith('/api')) {
+    return `${API_BASE_URL}${normalizedPath}`;
+  }
+
+  return `${API_BASE_URL}${API_BASE_URL.endsWith('/api') ? '' : '/api'}${normalizedPath}`;
+}
 
 export async function apiRequest(path, { method = 'GET', body, token } = {}) {
   const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
-  const response = await fetch(`${API_BASE_URL.replace(/\/$/, '')}${path}`, {
+  const response = await fetch(buildApiUrl(path), {
     method,
     headers: {
       ...(body && !isFormData ? { 'Content-Type': 'application/json' } : {}),
@@ -29,8 +40,8 @@ export async function apiRequest(path, { method = 'GET', body, token } = {}) {
 }
 
 export const authEndpoints = {
-  login: import.meta.env.VITE_AUTH_LOGIN_PATH || '/api/auth/login',
-  register: import.meta.env.VITE_AUTH_REGISTER_PATH || '/api/auth/register',
-  users: import.meta.env.VITE_USERS_PATH || '/api/users',
-  products: import.meta.env.VITE_PRODUCTS_PATH || '/api/products',
+  login: import.meta.env.VITE_AUTH_LOGIN_PATH || '/auth/login',
+  register: import.meta.env.VITE_AUTH_REGISTER_PATH || '/auth/register',
+  users: import.meta.env.VITE_USERS_PATH || '/users',
+  products: import.meta.env.VITE_PRODUCTS_PATH || '/products',
 };
