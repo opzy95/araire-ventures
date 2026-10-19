@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import { FiArrowLeft, FiLock, FiMail, FiUser } from 'react-icons/fi';
+import { FiArrowLeft, FiEye, FiEyeOff, FiLock, FiMail, FiUser } from 'react-icons/fi';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { isAdminUser, useAuth } from '../../contexts/AuthContext';
 import './AdminAuth.css';
 
 function AdminAuth({ mode }) {
   const isRegister = mode === 'register';
-  const { user, login, register, logout } = useAuth();
+  const { user, login, register } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [notice, setNotice] = useState(location.state?.message || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  if (!isRegister && user && isAdminUser(user)) return <Navigate to="/admin" replace />;
+  if (user) return <Navigate to={isAdminUser(user) ? '/admin' : '/dashboard'} replace />;
 
   const submit = async (event) => {
     event.preventDefault();
@@ -26,14 +27,10 @@ function AdminAuth({ mode }) {
       if (isRegister) {
         await register({ name: form.name.trim(), email: form.email.trim(), password: form.password });
         setNotice('Account created. Sign in to continue.');
-        navigate('/admin/login', { replace: true, state: { message: 'Account created. Sign in to continue.' } });
+        navigate('/login', { replace: true, state: { message: 'Account created. Sign in to continue.' } });
       } else {
         const session = await login({ email: form.email.trim(), password: form.password });
-        if (!isAdminUser(session.user)) {
-          logout();
-          throw new Error('This account does not have administrator access.');
-        }
-        navigate('/admin', { replace: true });
+        navigate(isAdminUser(session.user) ? '/admin' : '/dashboard', { replace: true });
       }
     } catch (requestError) {
       setError(requestError.message || 'Unable to complete your request.');
@@ -50,14 +47,14 @@ function AdminAuth({ mode }) {
           <span className="auth-monogram">AV</span>
           <p className="auth-brand-label">ARAIRE VENTURES</p>
           <h1>{isRegister ? 'Create your account.' : 'Welcome back.'}</h1>
-          <p className="auth-brand-copy">{isRegister ? 'Join the Araire Ventures community.' : 'Sign in to manage your store.'}</p>
+          <p className="auth-brand-copy">{isRegister ? 'Join the Araire Ventures community.' : 'Sign in and continue to your account dashboard.'}</p>
         </div>
 
         <div className="admin-auth-form-panel">
           <div className="auth-form-heading">
-            <p className="auth-form-kicker">{isRegister ? 'CUSTOMER ACCOUNT' : 'ADMINISTRATOR ACCESS'}</p>
+            <p className="auth-form-kicker">{isRegister ? 'CUSTOMER ACCOUNT' : 'ACCOUNT ACCESS'}</p>
             <h2>{isRegister ? 'Register' : 'Sign in'}</h2>
-            <p>{isRegister ? 'Create an account to continue.' : 'Use your seeded administrator account.'}</p>
+            <p>{isRegister ? 'Create an account to continue.' : 'Your role will take you to the right dashboard.'}</p>
           </div>
 
           {error && <div className="auth-message auth-error" role="alert">{error}</div>}
@@ -76,7 +73,19 @@ function AdminAuth({ mode }) {
             </label>
             <label className="auth-field">
               <span>Password</span>
-              <span className="auth-input-wrap"><FiLock /><input type="password" autoComplete={isRegister ? 'new-password' : 'current-password'} minLength={isRegister ? 8 : undefined} required value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} /></span>
+              <span className="auth-input-wrap">
+                <FiLock />
+                <input type={isPasswordVisible ? 'text' : 'password'} autoComplete={isRegister ? 'new-password' : 'current-password'} minLength={isRegister ? 8 : undefined} required value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} />
+                <button
+                  className="auth-password-toggle"
+                  type="button"
+                  aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
+                  aria-pressed={isPasswordVisible}
+                  onClick={() => setIsPasswordVisible((visible) => !visible)}
+                >
+                  {isPasswordVisible ? <FiEyeOff /> : <FiEye />}
+                </button>
+              </span>
               {isRegister && <small>Use at least 8 characters.</small>}
             </label>
             <button className="auth-submit-btn" type="submit" disabled={isSubmitting}>
@@ -85,12 +94,9 @@ function AdminAuth({ mode }) {
           </form>
 
           <p className="auth-switch-link">
-            {isRegister ? 'Already registered?' : 'Need a customer account?'}{' '}
-            <Link to={isRegister ? '/admin/login' : '/register'}>{isRegister ? 'Sign in' : 'Register'}</Link>
+            {isRegister ? 'Already registered?' : 'New to Araire Ventures?'}{' '}
+            <Link to={isRegister ? '/login' : '/register'}>{isRegister ? 'Sign in' : 'Register'}</Link>
           </p>
-          {!isRegister && user && (
-            <button className="auth-signout-link" onClick={logout}>Sign out of current session</button>
-          )}
         </div>
       </section>
     </main>
@@ -104,5 +110,5 @@ export function ProtectedAdminRoute({ children }) {
   const location = useLocation();
   return isAdminUser(user)
     ? children
-    : <Navigate to="/admin/login" replace state={{ from: location.pathname }} />;
+    : <Navigate to="/login" replace state={{ from: location.pathname }} />;
 }

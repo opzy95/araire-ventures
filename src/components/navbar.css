@@ -122,6 +122,12 @@
   color: #fff;
 }
 
+.nav-auth-register svg {
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+}
+
 .mobile-auth-links {
   display: none;
 }

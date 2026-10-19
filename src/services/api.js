@@ -1,19 +1,9 @@
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'https://araire-backend.onrender.com/api').replace(/\/$/, '');
-
-function buildApiUrl(path) {
-  const rawPath = path || '/';
-  const normalizedPath = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
-
-  if (normalizedPath.startsWith('/api')) {
-    return `${API_BASE_URL}${normalizedPath}`;
-  }
-
-  return `${API_BASE_URL}${API_BASE_URL.endsWith('/api') ? '' : '/api'}${normalizedPath}`;
-}
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'https://araire-backend.onrender.com').replace(/\/$/, '');
 
 export async function apiRequest(path, { method = 'GET', body, token } = {}) {
   const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
-  const response = await fetch(buildApiUrl(path), {
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const response = await fetch(`${API_BASE_URL}${normalizedPath}`, {
     method,
     headers: {
       ...(body && !isFormData ? { 'Content-Type': 'application/json' } : {}),

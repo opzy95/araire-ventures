@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FiBox, FiEdit2, FiLogOut, FiPlus, FiSearch, FiTrash2, FiUsers, FiX } from 'react-icons/fi';
+import { Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../../contexts/ProductContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { apiRequest, authEndpoints } from '../../services/api';
@@ -10,6 +11,7 @@ const categories = ['Kitchen', 'Appliances', 'Others'];
 function AdminDashboard() {
   const { databaseProducts: products, addProduct, updateProduct, removeProduct, databaseError, isLoadingDatabase } = useProducts();
   const { token, user, logout } = useAuth();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('products');
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All categories');
@@ -111,6 +113,11 @@ function AdminDashboard() {
     setActionError('');
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+  };
+
   const deleteProduct = async (product) => {
     if (product.source !== 'database') return;
     if (window.confirm(`Delete ${product.name} from the database?`)) {
@@ -154,8 +161,8 @@ function AdminDashboard() {
           <span>ARAIRE VENTURES / ADMIN</span>
           <div className="admin-topbar-actions">
             <span>{user?.name || user?.email}</span>
-            <a href="/">View storefront <span aria-hidden="true">↗</span></a>
-            <button onClick={logout} aria-label="Sign out" title="Sign out"><FiLogOut /></button>
+            <Link to="/">View storefront <span aria-hidden="true">↗</span></Link>
+            <button className="admin-logout-btn" onClick={handleLogout} title="Sign out"><FiLogOut /><span>Log out</span></button>
           </div>
         </header>
 

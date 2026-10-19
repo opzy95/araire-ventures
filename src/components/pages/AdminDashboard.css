@@ -7,7 +7,7 @@
   --admin-accent: #d96c3b;
   display: grid;
   grid-template-columns: 228px minmax(0, 1fr);
-  min-height: calc(100vh - 74px);
+  min-height: 100vh;
   background: var(--admin-wash);
   color: var(--admin-ink);
   font-family: 'Poppins', sans-serif;
@@ -164,6 +164,23 @@
   background: transparent;
   color: var(--admin-muted);
   cursor: pointer;
+}
+
+.admin-topbar-actions .admin-logout-btn {
+  display: inline-flex;
+  width: auto;
+  min-height: 32px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 9px;
+  border: 1px solid var(--admin-line);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 10px;
+}
+
+.admin-topbar-actions .admin-logout-btn:hover {
+  border-color: #f0d8cf;
 }
 
 .admin-topbar-actions button:hover {

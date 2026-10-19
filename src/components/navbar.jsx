@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { FiLogOut } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { isAdminUser, useAuth } from '../contexts/AuthContext';
 import './navbar.css';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { getTotalItems } = useCart();
+  const { user, logout } = useAuth();
+  const accountPath = isAdminUser(user) ? '/admin' : '/dashboard';
 
   const handleNavClick = (path) => {
     navigate(path);
@@ -15,6 +19,12 @@ const Navbar = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -43,8 +53,17 @@ const Navbar = () => {
             </span>
           </div>
           <div className="nav-auth-actions">
-            <Link to="/admin/login" className="nav-auth-login">Sign in</Link>
-            <Link to="/register" className="nav-auth-register">Register</Link>
+            {user ? (
+              <>
+                <Link to={accountPath} className="nav-auth-login">Dashboard</Link>
+                <button type="button" className="nav-auth-register" onClick={handleLogout}><FiLogOut /> Log out</button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="nav-auth-login">Sign in</Link>
+                <Link to="/register" className="nav-auth-register">Register</Link>
+              </>
+            )}
           </div>
 
           {/* Hamburger — only visible on mobile */}
@@ -71,8 +90,17 @@ const Navbar = () => {
           </div>
 
           <div className="mobile-auth-links">
-            <button className="nav-auth-login" onClick={() => handleNavClick('/admin/login')}>Sign in</button>
-            <button className="nav-auth-register" onClick={() => handleNavClick('/register')}>Register</button>
+            {user ? (
+              <>
+                <button className="nav-auth-login" onClick={() => handleNavClick(accountPath)}>Dashboard</button>
+                <button className="nav-auth-register" onClick={handleLogout}><FiLogOut /> Log out</button>
+              </>
+            ) : (
+              <>
+                <button className="nav-auth-login" onClick={() => handleNavClick('/login')}>Sign in</button>
+                <button className="nav-auth-register" onClick={() => handleNavClick('/register')}>Register</button>
+              </>
+            )}
           </div>
 
           <div className="mobile-categories-section">

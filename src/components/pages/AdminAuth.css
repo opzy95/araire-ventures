@@ -130,6 +130,21 @@
   font-size: 11px;
 }
 
+.auth-password-toggle {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #748179;
+  cursor: pointer;
+}
+
+.auth-password-toggle:hover { color: var(--auth-ink); }
+.auth-password-toggle svg { width: 15px; height: 15px; }
+
 .auth-field small { color: var(--auth-muted); font-size: 9px; font-weight: 400; }
 
 .auth-submit-btn {
@@ -152,17 +167,9 @@
 .auth-notice { border-left: 3px solid #5d8063; background: #edf5eb; color: #3f6548; }
 .auth-switch-link { margin-top: 20px; color: var(--auth-muted); font-size: 10px; text-align: center; }
 .auth-switch-link a,
-.auth-signout-link { color: #426b4d; font-weight: 600; text-decoration: none; }
+.auth-admin-link a { color: #426b4d; font-weight: 600; text-decoration: none; }
 
-.auth-signout-link {
-  align-self: center;
-  margin-top: 12px;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  font: inherit;
-  font-size: 10px;
-}
+.auth-admin-link { margin-top: 11px; font-size: 10px; text-align: center; }
 
 @media (max-width: 620px) {
   .admin-auth-page { min-height: min(760px, calc(100vh - 60px)); padding: 68px 16px 30px; }
