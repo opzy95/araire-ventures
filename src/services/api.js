@@ -1,15 +1,30 @@
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'https://araire-backend.onrender.com').replace(/\/$/, '');
+const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://araire-backend.onrender.com/api').replace(/\/+$/, '');
 
-export async function apiRequest(path, { method = 'GET', body, token } = {}) {
+function endpoint(path, fallback) {
+  const value = import.meta.env[path] || fallback;
+  return `${apiBaseUrl}${value.startsWith('/') ? value : `/${value}`}`;
+}
+
+export const authEndpoints = {
+  login: endpoint('VITE_AUTH_LOGIN_PATH', '/auth/login'),
+  register: endpoint('VITE_AUTH_REGISTER_PATH', '/auth/register'),
+  users: endpoint('VITE_USERS_PATH', '/users'),
+  products: endpoint('VITE_PRODUCTS_PATH', '/products'),
+};
+
+export async function apiRequest(url, { method = 'GET', body, token, headers = {} } = {}) {
+  const requestHeaders = new Headers(headers);
   const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
-  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  const response = await fetch(`${API_BASE_URL}${normalizedPath}`, {
+
+  if (token) requestHeaders.set('Authorization', `Bearer ${token}`);
+  if (body !== undefined && !isFormData && !requestHeaders.has('Content-Type')) {
+    requestHeaders.set('Content-Type', 'application/json');
+  }
+
+  const response = await fetch(url, {
     method,
-    headers: {
-      ...(body && !isFormData ? { 'Content-Type': 'application/json' } : {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    ...(body ? { body: isFormData ? body : JSON.stringify(body) } : {}),
+    headers: requestHeaders,
+    ...(body === undefined ? {} : { body: isFormData ? body : JSON.stringify(body) }),
   });
 
   const responseText = await response.text();
@@ -18,20 +33,16 @@ export async function apiRequest(path, { method = 'GET', body, token } = {}) {
     try {
       payload = JSON.parse(responseText);
     } catch {
-      payload = { message: responseText };
+      payload = responseText;
     }
   }
 
   if (!response.ok) {
-    throw new Error(payload?.message || payload?.error || `Request failed (${response.status})`);
+    const message = typeof payload === 'string'
+      ? payload
+      : payload?.message || payload?.error || `Request failed with status ${response.status}.`;
+    throw new Error(message);
   }
 
   return payload;
 }
-
-export const authEndpoints = {
-  login: import.meta.env.VITE_AUTH_LOGIN_PATH || '/auth/login',
-  register: import.meta.env.VITE_AUTH_REGISTER_PATH || '/auth/register',
-  users: import.meta.env.VITE_USERS_PATH || '/users',
-  products: import.meta.env.VITE_PRODUCTS_PATH || '/products',
-};
