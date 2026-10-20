@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { FiBox, FiEdit2, FiLogOut, FiPlus, FiSearch, FiTrash2, FiUsers, FiX } from 'react-icons/fi';
+import { FiBox, FiEdit2, FiLogOut, FiPlus, FiSearch, FiShoppingBag, FiTrash2, FiUsers, FiX } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../../contexts/ProductContext';
-import { useAuth } from '../../contexts/AuthContext';
+import { isAdminUser, useAuth } from '../../contexts/AuthContext';
 import { apiRequest, authEndpoints } from '../../services/api';
 import './AdminDashboard.css';
 
@@ -20,6 +20,12 @@ function AdminDashboard() {
   const [users, setUsers] = useState([]);
   const [isLoadingUsers, setIsLoadingUsers] = useState(true);
   const [usersError, setUsersError] = useState('');
+  const [orders, setOrders] = useState([]);
+  const [isLoadingOrders, setIsLoadingOrders] = useState(false);
+  const [ordersError, setOrdersError] = useState('');
+  const [ordersRefreshKey, setOrdersRefreshKey] = useState(0);
+  const [orderActionError, setOrderActionError] = useState('');
+  const [updatingOrderId, setUpdatingOrderId] = useState(null);
   const [actionError, setActionError] = useState('');
   const [isSavingProduct, setIsSavingProduct] = useState(false);
   const [form, setForm] = useState({
@@ -43,9 +49,9 @@ function AdminDashboard() {
     setUsersError('');
     apiRequest(authEndpoints.users, { token })
       .then((payload) => {
-        const result = payload?.data ?? payload;
+        const result = payload?.data?.data ?? payload?.data ?? payload;
         const records = Array.isArray(result) ? result : result?.users ?? result?.items ?? [];
-        if (isCurrent) setUsers(records);
+        if (isCurrent) setUsers(records.filter((record) => !isAdminUser(record)));
       })
       .catch((error) => {
         if (isCurrent) setUsersError(error.message);
@@ -55,6 +61,74 @@ function AdminDashboard() {
       });
     return () => { isCurrent = false; };
   }, [token]);
+
+  useEffect(() => {
+    if (activeTab !== 'orders') return undefined;
+    let isCurrent = true;
+    setIsLoadingOrders(true);
+    setOrdersError('');
+    apiRequest(authEndpoints.orders, { token })
+      .then((payload) => {
+        const result = payload?.data?.data ?? payload?.data ?? payload;
+        const records = Array.isArray(result)
+          ? result
+          : result?.orders ?? result?.items ?? result?.results ?? [];
+        if (isCurrent) setOrders(records);
+      })
+      .catch((error) => {
+        if (isCurrent) setOrdersError(error.message);
+      })
+      .finally(() => {
+        if (isCurrent) setIsLoadingOrders(false);
+      });
+    return () => { isCurrent = false; };
+  }, [activeTab, ordersRefreshKey, token]);
+
+  const verifyOrderPayment = async (order) => {
+    const orderId = order.id ?? order._id;
+    if (!orderId || String(order.paymentStatus || '').toLowerCase() === 'paid') return;
+    if (!window.confirm(`Confirm that payment for order ${String(orderId).slice(-8)} has been received?`)) return;
+
+    setOrderActionError('');
+    setUpdatingOrderId(orderId);
+    try {
+      await apiRequest(`${authEndpoints.orders}/${encodeURIComponent(orderId)}/payment`, {
+        method: 'PATCH',
+        token,
+      });
+      setOrders((currentOrders) => currentOrders.map((item) => (
+        (item.id ?? item._id) === orderId
+          ? { ...item, paymentStatus: 'paid' }
+          : item
+      )));
+    } catch (error) {
+      setOrderActionError(error.message);
+    } finally {
+      setUpdatingOrderId(null);
+    }
+  };
+
+  const formatRegistrationDate = (customer) => {
+    const registrationDate = customer.createdAt
+      ?? customer.registeredAt
+      ?? customer.created_at
+      ?? customer.dateJoined
+      ?? customer.joinedAt
+      ?? customer.registrationDate
+      ?? customer.createdOn;
+
+    let date;
+    if (registrationDate) {
+      date = new Date(registrationDate);
+    } else {
+      const id = customer.id ?? customer._id;
+      if (typeof id !== 'string' || !/^[a-f\d]{24}$/i.test(id)) return '—';
+      date = new Date(Number.parseInt(id.slice(0, 8), 16) * 1000);
+    }
+    return Number.isNaN(date.getTime())
+      ? '—'
+      : new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).format(date);
+  };
 
   const submitProduct = async (event) => {
     event.preventDefault();
@@ -152,6 +226,17 @@ function AdminDashboard() {
           onClick={() => setActiveTab('users')}
         >
           <FiUsers /> Users <span>{users.length}</span>
+        </button>
+        <button
+          className={`admin-side-link ${activeTab === 'orders' ? 'active' : ''}`}
+          onClick={() => {
+            setOrdersError('');
+            setIsLoadingOrders(true);
+            setOrdersRefreshKey((current) => current + 1);
+            setActiveTab('orders');
+          }}
+        >
+          <FiShoppingBag /> Orders <span>{orders.length}</span>
         </button>
         <div className="admin-sidebar-note">This inventory shows products stored in the database.</div>
       </aside>
@@ -251,7 +336,7 @@ function AdminDashboard() {
               </table>
             </div>
           </div>
-        ) : (
+        ) : activeTab === 'users' ? (
           <div className="admin-content">
             <div className="admin-page-title">
               <div>
@@ -268,22 +353,156 @@ function AdminDashboard() {
               ) : users.length ? (
                 <table className="admin-table">
                   <thead><tr><th>NAME</th><th>EMAIL</th><th>JOINED</th></tr></thead>
-                  <tbody>{users.map((user, index) => (
-                    <tr key={user.id || user.email || index}>
-                      <td>{user.name || user.fullName || 'Customer'}</td>
-                      <td>{user.email || '—'}</td>
-                      <td>{user.createdAt || user.registeredAt || '—'}</td>
+                  <tbody>{users.map((customer, index) => (
+                    <tr key={customer.id || customer._id || customer.email || index}>
+                      <td>{customer.name || customer.fullName || 'Customer'}</td>
+                      <td>{customer.email || '—'}</td>
+                      <td>{formatRegistrationDate(customer)}</td>
                     </tr>
                   ))}</tbody>
                 </table>
               ) : (
                 <div className="admin-users-empty">
                   <span className="admin-empty-icon"><FiUsers /></span>
-                  <h2>No registered users yet</h2>
-                  <p>User accounts will appear here once registration is connected to the store.</p>
+                  <h2>No customer accounts yet</h2>
+                  <p>Customer accounts will appear here after registration.</p>
                 </div>
               )}
             </div>
+          </div>
+        ) : (
+          <div className="admin-content">
+            <div className="admin-page-title">
+              <div>
+                <p className="admin-eyebrow">FULFILMENT</p>
+                <h1>Orders</h1>
+                <p className="admin-subtitle">Review customer orders and verify payment before updating their status.</p>
+              </div>
+            </div>
+            {orderActionError && <div className="admin-api-alert" role="alert">{orderActionError}</div>}
+            {ordersError ? (
+              <div className="admin-api-alert" role="alert">
+                <p>{ordersError}</p>
+                <button
+                  className="admin-retry-button"
+                  type="button"
+                  onClick={() => {
+                    setOrdersError('');
+                    setIsLoadingOrders(true);
+                    setOrdersRefreshKey((current) => current + 1);
+                  }}
+                >
+                  Retry loading orders
+                </button>
+              </div>
+            ) : isLoadingOrders ? (
+              <div className="admin-users-empty"><p>Loading orders…</p></div>
+            ) : orders.length ? (
+              <div className="admin-orders-grid">
+                {orders.map((order, index) => {
+                  const orderId = order.id ?? order._id ?? index;
+                  const lineItems = order.items ?? order.products ?? [];
+                  const status = String(order.status || 'pending').toLowerCase();
+                  const paymentStatus = String(order.paymentStatus || 'pending').toLowerCase();
+                  const customer = order.user ?? order.customer ?? (typeof order.userId === 'object' ? order.userId : null);
+                  const customerName = order.customerName
+                    || order.userName
+                    || customer?.name
+                    || customer?.fullName
+                    || customer?.username
+                    || 'Customer';
+                  const receiptUrl = order.receiptUrl
+                    || order.paymentReceiptUrl
+                    || (typeof order.receipt === 'string'
+                      ? order.receipt
+                      : order.receipt?.url ?? order.receipt?.imageUrl ?? order.receipt?.secure_url)
+                    || order.payment?.receiptUrl
+                    || order.payment?.receipt?.url
+                    || order.payment?.receipt?.imageUrl;
+                  return (
+                    <article className="admin-order-card" key={orderId}>
+                      <header>
+                        <div>
+                          <span className="admin-order-reference">ORDER {String(orderId).slice(-8)}</span>
+                          <p>{order.createdAt ? new Date(order.createdAt).toLocaleString() : 'Date unavailable'}</p>
+                        </div>
+                        <div className="admin-order-statuses">
+                          <span className={`admin-order-status status-${status}`}>Order: {status}</span>
+                          <span className={`admin-order-status payment-${paymentStatus}`}>Payment: {paymentStatus}</span>
+                        </div>
+                      </header>
+                      <div className="admin-order-customer">
+                        <strong>{customerName}</strong>
+                        {customer?.email && <span>{customer.email}</span>}
+                        <span>{order.phoneNumber || customer?.phoneNumber || customer?.phone || 'No phone number'}</span>
+                        <span>{order.deliveryAddress || 'No delivery address'}</span>
+                      </div>
+                      {lineItems.length > 0 && (
+                        <ul className="admin-order-items">
+                          {lineItems.map((line, lineIndex) => {
+                            const product = line.product ?? line;
+                            const lineId = product.id ?? product._id ?? line.productId ?? lineIndex;
+                            const quantity = Number(line.quantity) || 1;
+                            const price = Number(String(product.price ?? line.price ?? '').replace(/[^\d.-]/g, '')) || 0;
+                            const imageUrl = product.image ?? product.imageUrl ?? product.productImage ?? line.image ?? line.imageUrl;
+                            return (
+                              <li key={lineId}>
+                                <span className="admin-order-item-product">
+                                  <span className="admin-order-item-thumbnail">
+                                    {imageUrl
+                                      ? <img src={imageUrl} alt="" loading="lazy" />
+                                      : <FiBox aria-hidden="true" />}
+                                  </span>
+                                  <span className="admin-order-item-description">
+                                    {product.name || line.name || 'Product'} × {quantity}
+                                  </span>
+                                </span>
+                                <strong>₦{(price * quantity).toLocaleString('en-NG')}</strong>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
+                      {receiptUrl && (
+                        <a
+                          className="admin-order-receipt"
+                          href={receiptUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label="Open payment receipt image in a new tab"
+                        >
+                          <img src={receiptUrl} alt="Customer payment receipt" loading="lazy" />
+                          <span>View payment receipt</span>
+                        </a>
+                      )}
+                      <footer>
+                        <span>Total</span>
+                        <strong>₦{(Number(String(order.total ?? order.subtotal ?? '').replace(/[^\d.-]/g, '')) || 0).toLocaleString('en-NG')}</strong>
+                      </footer>
+                      {order.id || order._id ? paymentStatus !== 'paid' && (
+                        <button
+                          className="admin-verify-payment"
+                          type="button"
+                          disabled={updatingOrderId === orderId}
+                          onClick={() => verifyOrderPayment(order)}
+                        >
+                          {updatingOrderId === orderId ? 'Updating payment…' : 'Confirm payment received'}
+                        </button>
+                      ) : null}
+                    </article>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="admin-users-empty">
+                <span className="admin-empty-icon"><FiShoppingBag /></span>
+                <h2>No orders yet</h2>
+                <p>Customer orders will appear here when they are placed.</p>
+              </div>
+            )}
+            <p className="admin-orders-note">
+              Orders are created as pending. This backend does not yet provide an admin status-update endpoint, so this dashboard cannot mark an order as paid.
+            </p>
           </div>
         )}
       </section>

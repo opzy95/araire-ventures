@@ -1,23 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useCart } from '../contexts/CartContext';
-import { FaWhatsapp, FaQrcode, FaTimes } from 'react-icons/fa';
-import QRCode from 'qrcode';
+import { useAuth } from '../contexts/AuthContext';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import OrderCheckout from './OrderCheckout';
 import './Cart.css';
 
-function Cart() {
-  const { items, removeFromCart, updateQuantity, getTotalPrice, clearCart } = useCart();
-  const [showQR, setShowQR] = useState(false);
-  const [qrDataUrl, setQrDataUrl] = useState('');
-  const [isMobile, setIsMobile] = useState(false);
+function getPrice(price) {
+  const amount = Number(String(price ?? '').replace(/[^\d.-]/g, ''));
+  return Number.isFinite(amount) ? amount : 0;
+}
 
-  // ✅ Detect screen size
+function Cart() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const {
+    items,
+    removeFromCart,
+    updateQuantity,
+    getTotalPrice,
+    getTotalItems,
+    clearCart,
+    loading: isCartLoading,
+    error: cartError,
+    loadError: cartLoadError,
+  } = useCart();
+  const { token } = useAuth();
+  const [showCheckout, setShowCheckout] = useState(() => Boolean(location.state?.openCheckout));
+  const [actionError, setActionError] = useState('');
+
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
+    if (!location.state?.openCheckout) return;
+    navigate(location.pathname, { replace: true, state: null });
+  }, [location.pathname, location.state, navigate]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -32,43 +47,59 @@ function Cart() {
     visible: { y: 0, opacity: 1, transition: { duration: 0.4 } },
   };
 
-  const handleQuantityChange = (id, newQuantity) => {
-    updateQuantity(id, parseInt(newQuantity));
-  };
-
-  // ✅ Build WhatsApp URL with order details
-  const buildWhatsAppUrl = () => {
-    const totalPrice = getTotalPrice();
-    const orderSummary = items
-      .map(
-        (item) =>
-          `${item.name} (x${item.quantity}) - ₦${(
-            parseFloat(item.price.replace('₦', '').replace(',', '')) * item.quantity
-          ).toLocaleString()}`
-      )
-      .join('\n');
-
-    const message = `Hello! I'd like to place an order:\n\n${orderSummary}\n\nTotal: ₦${totalPrice.toLocaleString()}\n\nPlease confirm my order.`;
-    return `https://wa.me/2347035532047?text=${encodeURIComponent(message)}`;
-  };
-
-  // ✅ Generate QR code whenever modal opens or items change
-  useEffect(() => {
-    if (showQR) {
-      QRCode.toDataURL(buildWhatsAppUrl(), { width: 220, margin: 2 })
-        .then(setQrDataUrl)
-        .catch(console.error);
+  const handleQuantityChange = async (id, newQuantity) => {
+    const quantity = Number.parseInt(newQuantity, 10);
+    if (!Number.isInteger(quantity) || quantity <= 0) return;
+    setActionError('');
+    try {
+      await updateQuantity(id, quantity);
+    } catch (error) {
+      setActionError(error.message);
     }
-  }, [showQR, items]);
+  };
+
+  const handleRemove = async (id) => {
+    setActionError('');
+    try {
+      await removeFromCart(id);
+    } catch (error) {
+      setActionError(error.message);
+    }
+  };
+
+  const handleClearCart = async () => {
+    setActionError('');
+    try {
+      await clearCart();
+    } catch (error) {
+      setActionError(error.message);
+    }
+  };
 
   const handlePlaceOrder = () => {
     if (items.length === 0) return;
-    if (isMobile) {
-      window.open(buildWhatsAppUrl(), '_blank'); // ✅ direct WhatsApp on mobile
+    if (token) {
+      setShowCheckout(true);
     } else {
-      setShowQR(true); // ✅ show QR modal on desktop
+      navigate('/login', {
+        state: {
+          from: '/cart',
+          continueCheckout: true,
+          message: 'Sign in or create an account to continue with your order.',
+        },
+      });
     }
   };
+
+  if (isCartLoading) {
+    return (
+      <section className="cart">
+        <div className="cart-wrapper">
+          <div className="empty-cart" role="status"><p>Loading your cart…</p></div>
+        </div>
+      </section>
+    );
+  }
 
   if (items.length === 0) {
     return (
@@ -80,9 +111,12 @@ function Cart() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2>Your Cart is Empty</h2>
-            <p>Add some products to get started!</p>
-            <a href="/" className="continue-shopping-btn">Continue Shopping</a>
+            {cartLoadError
+              ? <p className="cart-error" role="alert">Could not load your cart: {cartLoadError}</p>
+              : <h2>Your Cart is Empty</h2>}
+            {!cartLoadError && <p>Add some products to get started!</p>}
+            {(cartError || actionError) && <p className="cart-error" role="alert">{actionError || cartError}</p>}
+            <Link to="/shop" className="continue-shopping-btn">Continue Shopping</Link>
           </motion.div>
         </div>
       </section>
@@ -101,8 +135,12 @@ function Cart() {
             viewport={{ once: true }}
           >
             <h2>Your Shopping Cart</h2>
-            <p>{items.length} item{items.length !== 1 ? 's' : ''} in your cart</p>
+            <p>{getTotalItems()} item{getTotalItems() !== 1 ? 's' : ''} in your cart</p>
           </motion.div>
+
+          {(cartError || actionError || cartLoadError) && (
+          <p className="cart-error" role="alert">{actionError || cartError || cartLoadError}</p>
+          )}
 
           <motion.div
             className="cart-content"
@@ -135,11 +173,11 @@ function Cart() {
                       />
                       <button className="quantity-btn" onClick={() => handleQuantityChange(item.id, item.quantity + 1)}>+</button>
                     </div>
-                    <button className="remove-btn" onClick={() => removeFromCart(item.id)}>Remove</button>
+                    <button className="remove-btn" onClick={() => handleRemove(item.id)}>Remove</button>
                   </div>
 
                   <div className="cart-item-total">
-                    ₦{(parseFloat(item.price.replace('₦', '').replace(',', '')) * item.quantity).toLocaleString()}
+                    ₦{(getPrice(item.price) * item.quantity).toLocaleString()}
                   </div>
                 </motion.div>
               ))}
@@ -151,14 +189,12 @@ function Cart() {
               </div>
 
               <div className="cart-actions">
-                <button className="clear-cart-btn" onClick={clearCart}>
+                <button className="clear-cart-btn" onClick={handleClearCart}>
                   Clear Cart
                 </button>
 
-                {/* ✅ QR icon on desktop, WhatsApp icon on mobile */}
-                <button className="whatsapp-order-btn" onClick={handlePlaceOrder}>
-                  {isMobile ? <FaWhatsapp /> : <FaQrcode />}
-                  {isMobile ? ' Order via WhatsApp' : ' Scan to Order'}
+                <button className="cart-checkout-btn" onClick={handlePlaceOrder}>
+                  {token ? 'Proceed to checkout' : 'Sign in to checkout'}
                 </button>
               </div>
             </div>
@@ -166,24 +202,7 @@ function Cart() {
         </div>
       </section>
 
-      {/* ✅ QR Code Modal — desktop only */}
-      {showQR && (
-        <>
-          <div className="qr-backdrop" onClick={() => setShowQR(false)} />
-          <div className="qr-modal">
-            <button className="qr-close" onClick={() => setShowQR(false)}>
-              <FaTimes />
-            </button>
-            <FaWhatsapp className="qr-wa-icon" />
-            <h3>Scan to Order on WhatsApp</h3>
-            <p>Open your phone camera and scan the QR code</p>
-            {qrDataUrl && (
-              <img src={qrDataUrl} alt="WhatsApp QR Code" className="qr-image" />
-            )}
-            <span className="qr-hint">Points directly to our WhatsApp chat with your order</span>
-          </div>
-        </>
-      )}
+      {showCheckout && <OrderCheckout onClose={() => setShowCheckout(false)} />}
     </>
   );
 }

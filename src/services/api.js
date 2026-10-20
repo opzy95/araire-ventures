@@ -10,6 +10,10 @@ export const authEndpoints = {
   register: endpoint('VITE_AUTH_REGISTER_PATH', '/auth/register'),
   users: endpoint('VITE_USERS_PATH', '/users'),
   products: endpoint('VITE_PRODUCTS_PATH', '/products'),
+  cart: endpoint('VITE_CART_PATH', '/cart'),
+  cartItems: `${endpoint('VITE_CART_PATH', '/cart')}/items`,
+  orders: endpoint('VITE_ORDERS_PATH', '/orders'),
+  myOrders: `${endpoint('VITE_ORDERS_PATH', '/orders')}/my-orders`,
 };
 
 export async function apiRequest(url, { method = 'GET', body, token, headers = {} } = {}) {
@@ -38,10 +42,10 @@ export async function apiRequest(url, { method = 'GET', body, token, headers = {
   }
 
   if (!response.ok) {
-    const message = typeof payload === 'string'
+    const reason = typeof payload === 'string'
       ? payload
-      : payload?.message || payload?.error || `Request failed with status ${response.status}.`;
-    throw new Error(message);
+      : payload?.message || payload?.error || response.statusText || 'Unknown API error.';
+    throw new Error(`${method} ${url} failed (${response.status}): ${reason}`);
   }
 
   return payload;

@@ -39,6 +39,7 @@ export function ProductProvider({ children }) {
         if (isCurrent) {
           setDatabaseProducts(fetchedProducts.map((product) => ({
             ...product,
+            id: product.id ?? product._id,
             category: typeof product.category === 'string' ? product.category : product.category?.name || 'Others',
             source: 'database',
           })));
@@ -65,6 +66,7 @@ export function ProductProvider({ children }) {
     setDatabaseProducts((currentProducts) => [{
       ...product,
       ...(savedProduct && typeof savedProduct === 'object' ? savedProduct : {}),
+      id: savedProduct?.id ?? savedProduct?._id ?? product.id,
       category: product.category,
       source: 'database',
     }, ...currentProducts]);

@@ -14,8 +14,23 @@ function AdminAuth({ mode }) {
   const [notice, setNotice] = useState(location.state?.message || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const requestedPath = typeof location.state?.from === 'string'
+    ? location.state.from
+    : location.state?.from?.pathname;
+  const customerDestination = [
+    '/',
+    '/shop',
+    '/kitchen',
+    '/appliances',
+    '/others',
+    '/cart',
+    '/dashboard',
+  ].includes(requestedPath) ? requestedPath : '/dashboard';
+  const customerRedirect = location.state?.continueCheckout
+    ? { pathname: '/cart', state: { openCheckout: true } }
+    : customerDestination;
 
-  if (user) return <Navigate to={isAdminUser(user) ? '/admin' : '/dashboard'} replace />;
+  if (user) return <Navigate to={isAdminUser(user) ? '/admin' : customerRedirect} replace />;
 
   const submit = async (event) => {
     event.preventDefault();
@@ -27,10 +42,13 @@ function AdminAuth({ mode }) {
       if (isRegister) {
         await register({ name: form.name.trim(), email: form.email.trim(), password: form.password });
         setNotice('Account created. Sign in to continue.');
-        navigate('/login', { replace: true, state: { message: 'Account created. Sign in to continue.' } });
+        navigate('/login', {
+          replace: true,
+          state: { ...location.state, message: 'Account created. Sign in to continue.' },
+        });
       } else {
         const session = await login({ email: form.email.trim(), password: form.password });
-        navigate(isAdminUser(session.user) ? '/admin' : '/dashboard', { replace: true });
+        navigate(isAdminUser(session.user) ? '/admin' : customerRedirect, { replace: true });
       }
     } catch (requestError) {
       setError(requestError.message || 'Unable to complete your request.');
@@ -95,7 +113,12 @@ function AdminAuth({ mode }) {
 
           <p className="auth-switch-link">
             {isRegister ? 'Already registered?' : 'New to Araire Ventures?'}{' '}
-            <Link to={isRegister ? '/login' : '/register'}>{isRegister ? 'Sign in' : 'Register'}</Link>
+            <Link
+              to={isRegister ? '/login' : '/register'}
+              state={isRegister ? location.state : undefined}
+            >
+              {isRegister ? 'Sign in' : 'Sign up'}
+            </Link>
           </p>
         </div>
       </section>

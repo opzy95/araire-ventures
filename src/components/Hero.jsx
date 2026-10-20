@@ -1,113 +1,151 @@
-import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import "./Hero.css";
+import React, { useEffect, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { FiArrowRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+import './Hero.css';
 
-function TypewriterText({ sentence, speed = 600 }) {
-  const words = sentence.trim().split(/\s+/);
-  const [hidden, setHidden] = useState(new Set());
-  const timerRef = useRef(null);
-
-  useEffect(() => {
-    let hiddenCount = 0;
-    let erasing = true;
-
-    const tick = () => {
-      if (erasing) {
-        if (hiddenCount < words.length) {
-          hiddenCount++;
-          setHidden(
-            new Set(
-              Array.from({ length: hiddenCount }, (_, i) => words.length - 1 - i)
-            )
-          );
-          timerRef.current = setTimeout(tick, speed);
-        } else {
-          erasing = false;
-          timerRef.current = setTimeout(tick, speed * 1.5);
-        }
-      } else {
-        if (hiddenCount > 0) {
-          hiddenCount--;
-          setHidden(
-            new Set(
-              Array.from({ length: hiddenCount }, (_, i) => words.length - 1 - i)
-            )
-          );
-          timerRef.current = setTimeout(tick, speed);
-        } else {
-          erasing = true;
-          timerRef.current = setTimeout(tick, speed * 3);
-        }
-      }
-    };
-
-    timerRef.current = setTimeout(tick, speed * 2);
-    return () => clearTimeout(timerRef.current);
-  }, [sentence, speed]);
-
-  return (
-    <>
-      {words.map((word, i) => (
-        <span
-          key={i}
-          style={{
-            display: "inline-block",
-            marginRight: "0.3em",
-            transition: "opacity 0.3s ease, transform 0.3s ease",
-            opacity: hidden.has(i) ? 0 : 1,
-            transform: hidden.has(i) ? "translateY(-8px)" : "translateY(0)",
-          }}
-        >
-          {word}
-        </span>
-      ))}
-    </>
-  );
-}
+const slides = [
+  {
+    eyebrow: 'Thoughtful finds for everyday living',
+    title: 'Make room for a little more joy.',
+    description: 'Discover practical kitchen essentials and home comforts, thoughtfully chosen for the way you live.',
+    image: '/iimage/Airfryer.jpeg',
+    category: 'Appliances',
+    path: '/appliances',
+    accent: 'A better everyday',
+  },
+  {
+    eyebrow: 'A kitchen that works beautifully',
+    title: 'The little details make a home.',
+    description: 'From clever storage to kitchen favourites, find useful pieces that make daily routines feel easier.',
+    image: '/iimage/Foldable_kitchen_rack.jpeg',
+    category: 'Kitchen',
+    path: '/kitchen',
+    accent: 'Made for your home',
+  },
+  {
+    eyebrow: 'Something useful for every corner',
+    title: 'Find your next home favourite.',
+    description: 'Explore a considered collection of home, family and lifestyle essentials at prices you will love.',
+    image: '/iimage/Cosynest_Fryer.jpeg',
+    category: 'Shop',
+    path: '/shop',
+    accent: 'The Araire edit',
+  },
+  {
+    eyebrow: 'Everyday comfort, thoughtfully chosen',
+    title: 'Make home feel even better.',
+    description: 'Shop useful little upgrades for your kitchen, home and daily routine.',
+    image: '/iimage/Table_fan.jpeg',
+    category: 'Shop',
+    path: '/shop',
+    accent: 'Your home, your way',
+  },
+];
 
 function Hero() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (isPaused || shouldReduceMotion) return undefined;
+
+    const timer = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % slides.length);
+    }, 6000);
+
+    return () => window.clearInterval(timer);
+  }, [isPaused, shouldReduceMotion]);
+
+  const showSlide = (direction) => {
+    setActiveSlide((current) => (current + direction + slides.length) % slides.length);
+  };
+  const slide = slides[activeSlide];
+
   return (
-    <motion.div
+    <section
       className="hero"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      aria-label="Featured collections"
+      aria-roledescription="carousel"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocusCapture={() => setIsPaused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false);
+      }}
     >
-      <div className="hero-content">
+      <div className="hero-inner">
+        <div className="hero-copy" aria-live={isPaused ? 'polite' : 'off'} aria-atomic="true">
+          <AnimatePresence mode="wait">
+            <motion.div
+              className="hero-copy-content"
+              key={activeSlide}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.35 }}
+            >
+              <span className="hero-eyebrow"><span />{slide.eyebrow}</span>
+              <h1>{slide.title}</h1>
+              <p>{slide.description}</p>
+              <Link className="hero-cta" to={slide.path}>
+                Explore {slide.category} <FiArrowRight aria-hidden="true" />
+              </Link>
+              <div className="hero-account-actions" aria-label="Store and account links">
+              
+              </div>
+            </motion.div>
+          </AnimatePresence>
 
-        {/* ✅ TypewriterText sits inside the existing motion.h1 */}
-        <motion.h1
-          initial={{ x: -100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          style={{ display: "flex", flexWrap: "wrap" }}
-        >
-          <TypewriterText
-            sentence="Quality Kitchen and Home Essentials"
-            speed={500}
-          />
-        </motion.h1>
+          <div className="hero-controls">
+            <div className="hero-pagination" aria-label="Choose a featured collection">
+              {slides.map((item, index) => (
+                <button
+                  key={item.category}
+                  type="button"
+                  className={`hero-dot${activeSlide === index ? ' active' : ''}`}
+                  aria-label={`Show ${item.category} collection`}
+                  aria-current={activeSlide === index ? 'true' : undefined}
+                  onClick={() => setActiveSlide(index)}
+                />
+              ))}
+              <span className="hero-slide-number">0{activeSlide + 1} <span>/ 0{slides.length}</span></span>
+            </div>
+            <div className="hero-arrow-controls">
+              <button type="button" aria-label="Previous collection" onClick={() => showSlide(-1)}>
+                <FiChevronLeft aria-hidden="true" />
+              </button>
+              <button type="button" aria-label="Next collection" onClick={() => showSlide(1)}>
+                <FiChevronRight aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        </div>
 
-        <motion.p
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-        >
-          Affordable, durable product design to elevate your everyday home
-          experience. Curated for the modern lifestyle.
-        </motion.p>
-
-        <motion.div
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-        >
-          <button>Shop Now</button>
-          <button>ORDER VIA WHATSAPP</button>
-        </motion.div>
-
-      </div> 
-    </motion.div>
+        <div className="hero-visual" aria-hidden="true">
+          <div className="hero-visual-orbit hero-visual-orbit-one" />
+          <div className="hero-visual-orbit hero-visual-orbit-two" />
+          <AnimatePresence mode="wait">
+            <motion.div
+              className="hero-image-card"
+              key={slide.image}
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.97, x: 14 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.98, x: -10 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.4 }}
+            >
+              <img src={slide.image} alt="" />
+            </motion.div>
+          </AnimatePresence>
+          <div className="hero-image-note">
+            <span className="hero-note-mark">✳</span>
+            <span>{slide.accent}</span>
+          </div>
+          <span className="hero-visual-label">ARAIRE VENTURES <span>•</span> CURATED WITH CARE</span>
+        </div>
+      </div>
+    </section>
   );
 }
 

@@ -238,6 +238,21 @@
   line-height: 1.6;
 }
 
+.admin-retry-button {
+  margin-top: 8px;
+  padding: 6px 9px;
+  border: 1px solid #d7b0a3;
+  background: #fff;
+  color: #843d30;
+  cursor: pointer;
+  font: inherit;
+  font-size: 9px;
+}
+
+.admin-retry-button:hover {
+  border-color: #843d30;
+}
+
 .admin-primary-btn,
 .admin-cancel-btn {
   display: inline-flex;
@@ -532,6 +547,214 @@
   color: var(--admin-ink);
   font-family: 'Playfair Display', serif;
   font-size: 18px;
+}
+
+.admin-orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+  gap: 14px;
+}
+
+.admin-order-card {
+  padding: 17px;
+  border: 1px solid var(--admin-line);
+  background: var(--admin-paper);
+}
+
+.admin-order-card > header,
+.admin-order-card > footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-order-reference {
+  color: var(--admin-ink);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.admin-order-card > header p {
+  margin-top: 5px;
+  color: var(--admin-muted);
+  font-size: 9px;
+}
+
+.admin-order-status {
+  padding: 5px 8px;
+  border-radius: 20px;
+  background: #fff2dc;
+  color: #8b5d15;
+  font-size: 9px;
+  text-transform: capitalize;
+}
+
+.admin-order-status.status-paid {
+  background: #e8f3e9;
+  color: #3c7048;
+}
+
+.admin-order-status.payment-paid {
+  background: #e8f3e9;
+  color: #3c7048;
+}
+
+.admin-order-status.payment-pending {
+  background: #fff2dc;
+  color: #8b5d15;
+}
+
+.admin-order-statuses {
+  display: grid;
+  justify-items: end;
+  gap: 5px;
+}
+
+.admin-order-customer {
+  display: grid;
+  gap: 5px;
+  margin-top: 15px;
+  padding: 12px 0;
+  border-top: 1px solid #edf0ec;
+  border-bottom: 1px solid #edf0ec;
+}
+
+.admin-order-customer strong {
+  color: var(--admin-ink);
+  font-size: 10px;
+}
+
+.admin-order-customer span {
+  color: var(--admin-muted);
+  font-size: 9px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.admin-order-items {
+  display: grid;
+  gap: 7px;
+  margin: 12px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-order-items li,
+.admin-order-card > footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  color: #526159;
+  font-size: 9px;
+}
+
+.admin-order-item-product {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 9px;
+}
+
+.admin-order-item-thumbnail {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: hidden;
+  background: #f0f1ed;
+  color: #98a39b;
+}
+
+.admin-order-item-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-order-item-thumbnail svg {
+  width: 16px;
+  height: 16px;
+}
+
+.admin-order-item-description {
+  min-width: 0;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.admin-order-items li strong,
+.admin-order-card > footer strong {
+  color: var(--admin-ink);
+  white-space: nowrap;
+}
+
+.admin-order-card > footer {
+  padding-top: 11px;
+  border-top: 1px solid #edf0ec;
+  font-size: 10px;
+}
+
+.admin-order-receipt {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 9px;
+  margin: 8px 0 12px;
+  color: #42564a;
+  font-size: 9px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.admin-order-receipt img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border: 1px solid var(--admin-line);
+  background: #f0f1ed;
+  object-fit: cover;
+}
+
+.admin-order-receipt:hover {
+  color: var(--admin-accent);
+}
+
+.admin-orders-note {
+  margin-top: 15px;
+  padding: 11px 13px;
+  border: 1px solid #e9dfc9;
+  background: #fffaf0;
+  color: #77613a;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.admin-verify-payment {
+  width: 100%;
+  min-height: 36px;
+  margin-top: 13px;
+  border: 1px solid #d7e0d7;
+  background: #f5f8f4;
+  color: #385642;
+  cursor: pointer;
+  font: inherit;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.admin-verify-payment:hover:not(:disabled) {
+  border-color: #385642;
+  background: #385642;
+  color: #fff;
+}
+
+.admin-verify-payment:disabled {
+  cursor: wait;
+  opacity: 0.65;
 }
 
 .admin-users-empty p {

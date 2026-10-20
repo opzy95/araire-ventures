@@ -12,11 +12,14 @@ function Kitchen() {
   const { addToast } = useToast();
   const kitchenProducts = getProductsByCategory('Kitchen');
 
-  const handleAddToCart = (product, e) => {
+  const handleAddToCart = async (product, e) => {
     e.stopPropagation();
-    console.log('Adding to cart:', product);
-    addToCart(product);
-    addToast(`✅ ${product.name} added to cart!`, 'success');
+    try {
+      await addToCart(product);
+      addToast(`${product.name} added to cart.`, 'success');
+    } catch (error) {
+      addToast(`Could not add ${product.name}: ${error.message}`, 'error');
+    }
   };
 
   const containerVariants = {

@@ -13,8 +13,10 @@ function getAuthResult(payload) {
 }
 
 export function isAdminUser(user) {
-  const role = String(user?.role ?? user?.userType ?? '').toLowerCase();
-  const roles = Array.isArray(user?.roles) ? user.roles.map((item) => String(item).toLowerCase()) : [];
+  const role = String(user?.role?.name ?? user?.role ?? user?.userType ?? '').toLowerCase();
+  const roles = Array.isArray(user?.roles)
+    ? user.roles.map((item) => String(item?.name ?? item?.role ?? item).toLowerCase())
+    : [];
   return role === 'admin' || roles.includes('admin') || user?.isAdmin === true;
 }
 

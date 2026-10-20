@@ -9,6 +9,7 @@ import Kids from './components/Kids';
 import About from './components/About';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
+import StorefrontShop from './components/StorefrontShop';
 import { CartProvider } from './contexts/CartContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { ProductProvider } from './contexts/ProductContext';
@@ -38,6 +39,7 @@ function AppRoutes() {
         <Route path="/kitchen" element={<Kitchen />} />
         <Route path="/appliances" element={<Appliances />} />
         <Route path="/others" element={<Kids />} />
+        <Route path="/shop" element={<StorefrontShop />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<AdminAuth mode="login" />} />
         <Route path="/admin/login" element={<Navigate to="/login" replace />} />
@@ -53,15 +55,15 @@ function AppRoutes() {
 function App() {
   return (
     <ToastProvider>
-      <CartProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <CartProvider>
           <ProductProvider>
             <Router>
               <AppRoutes />
             </Router>
           </ProductProvider>
-        </AuthProvider>
-      </CartProvider>
+        </CartProvider>
+      </AuthProvider>
     </ToastProvider>
   );
 }
