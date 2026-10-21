@@ -36,7 +36,7 @@ const slides = [
     eyebrow: 'Everyday comfort, thoughtfully chosen',
     title: 'Make home feel even better.',
     description: 'Shop useful little upgrades for your kitchen, home and daily routine.',
-    image: '/iimage/Table_fan.jpeg',
+    image: '/iimage/goods4.jpeg',
     category: 'Shop',
     path: '/shop',
     accent: 'Your home, your way',
