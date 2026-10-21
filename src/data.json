@@ -2,17 +2,17 @@
   "categories": [
     {
       "name": "Kitchen",
-      "image": "/image/dish%20drainer.jpeg",
+      "image": "/iimage/goods1.jpeg",
       "description": "Essential kitchen tools and accessories designed to make cooking and dining easier. From dish drainers to storage solutions."
     },
     {
       "name": "Appliances",
-      "image": "/image/elctriccooker.jpeg",
+      "image": "/iimage/goods3.jpeg",
       "description": "Reliable home appliances built for durability and efficiency. From electric cookers to fans, perfect for everyday use."
     },
     {
       "name": "Others",
-      "image": "/image/childchair.jpeg",
+      "image": "/iimage/goods2.jpeg",
       "description": "Miscellaneous home and lifestyle products for various needs. From furniture to storage solutions."
     }
   ]
