@@ -189,7 +189,7 @@ function AdminDashboard() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login', { replace: true });
+    navigate('/admin/login', { replace: true });
   };
 
   const deleteProduct = async (product) => {

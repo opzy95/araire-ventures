@@ -8,6 +8,8 @@ function endpoint(path, fallback) {
 export const authEndpoints = {
   login: endpoint('VITE_AUTH_LOGIN_PATH', '/auth/login'),
   register: endpoint('VITE_AUTH_REGISTER_PATH', '/auth/register'),
+  forgotPassword: endpoint('VITE_AUTH_FORGOT_PASSWORD_PATH', '/auth/forgot-password'),
+  resetPassword: endpoint('VITE_AUTH_RESET_PASSWORD_PATH', '/auth/reset-password'),
   users: endpoint('VITE_USERS_PATH', '/users'),
   products: endpoint('VITE_PRODUCTS_PATH', '/products'),
   cart: endpoint('VITE_CART_PATH', '/cart'),
@@ -45,7 +47,10 @@ export async function apiRequest(url, { method = 'GET', body, token, headers = {
     const reason = typeof payload === 'string'
       ? payload
       : payload?.message || payload?.error || response.statusText || 'Unknown API error.';
-    throw new Error(`${method} ${url} failed (${response.status}): ${reason}`);
+    const error = new Error(`${method} ${url} failed (${response.status}): ${reason}`);
+    error.status = response.status;
+    error.apiMessage = reason;
+    throw error;
   }
 
   return payload;

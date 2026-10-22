@@ -42,7 +42,9 @@ function AppRoutes() {
         <Route path="/shop" element={<StorefrontShop />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<AdminAuth mode="login" />} />
-        <Route path="/admin/login" element={<Navigate to="/login" replace />} />
+        <Route path="/forgot-password" element={<AdminAuth mode="forgot-password" />} />
+        <Route path="/reset-password" element={<AdminAuth mode="reset-password" />} />
+        <Route path="/admin/login" element={<AdminAuth mode="admin-login" />} />
         <Route path="/register" element={<AdminAuth mode="register" />} />
         <Route path="/admin" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
         <Route path="/dashboard" element={<ProtectedCustomerRoute><CustomerDashboard /></ProtectedCustomerRoute>} />
